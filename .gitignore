@@ -1,2 +1,4 @@
 /includes/api-config.php
 node_modules
+vendor
+wp-content

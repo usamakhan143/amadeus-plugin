@@ -25,12 +25,14 @@ if (!class_exists('AmadeusPlugin')) {
         {
             define('AMADEUS_PLUGIN_URL', plugin_dir_url(__FILE__));
             define('AMADEUS_PLUGIN_PATH', plugin_dir_path(__FILE__));
+            require_once(AMADEUS_PLUGIN_PATH . '/vendor/autoload.php');
         }
 
         function initialize()
         {
-            include_once(AMADEUS_PLUGIN_PATH . 'includes/amadeus-plugin.php');
             include_once(AMADEUS_PLUGIN_PATH . 'includes/utilities.php');
+            include_once(AMADEUS_PLUGIN_PATH . 'includes/amadeus-plugin.php');
+            include_once(AMADEUS_PLUGIN_PATH . 'includes/options-page.php');
         }
 
     }
@@ -41,3 +43,12 @@ if (!class_exists('AmadeusPlugin')) {
 
 $AmadeusPlugin = new AmadeusPlugin();
 $AmadeusPlugin->initialize();
+
+
+add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'salcode_add_plugin_page_settings_link');
+function salcode_add_plugin_page_settings_link( $links ) {
+    $links[] = '<a href="' .
+        admin_url( 'tools.php?page=crb_carbon_fields_container_amadeus.php' ) .
+        '">' . __('Settings') . '</a>';
+    return $links;
+}
