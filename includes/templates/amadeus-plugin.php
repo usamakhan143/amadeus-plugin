@@ -90,6 +90,18 @@ include AMADEUS_PLUGIN_PATH . 'includes/api-config.php';
         }
     }
 
+    var id_attr = '';
+
+    // '<?php
+    //     $id_attributes = get_plugin_options_ap( 'id_attributes' );
+    //     echo '<ul>';
+    //     foreach ( $id_attributes as $slide ) {
+    //         echo '<li>';
+    //         echo '<h2>' . $slide['id_strg'] . '</h2>';
+    //         echo '</li>';
+    //     }
+    //     echo '</ul>';
+    // ?>'
     // Autocomplete functionality
     $("#autocomplete-input").autocomplete({
         source: makeAPIRequest,

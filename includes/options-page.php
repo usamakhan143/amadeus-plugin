@@ -30,6 +30,15 @@ function create_options_page_ap() {
             ->set_attribute('placeholder', 'Enter the CSS ID of the field where you want to show the auto-completes.')
         ) )
 
+    ))
+    
+    ->add_fields( array(
+        
+        Field::make( 'text', 'client_id', 'Client ID' )
+            ->set_attribute('placeholder', 'Enter Client ID here...'),
+        Field::make( 'text', 'client_secret', 'Client Secret' )
+            ->set_attribute('placeholder', 'Enter Client Secret here...')
+
     ));
 
 }
