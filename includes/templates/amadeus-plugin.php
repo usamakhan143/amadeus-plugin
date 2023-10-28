@@ -1,12 +1,21 @@
 <?php
 
 include AMADEUS_PLUGIN_PATH . 'includes/api-config.php';
+$id_attributes = get_plugin_options_ap( 'id_attributes' );
+if ($id_attributes) {
+    $resultArray = array();
+    foreach ($id_attributes as $item) {
+        // Assuming each item in the complex field is a single value
+        $resultArray[] = $item;
+    }
+}
+$ids_separated = implode(', ', $resultArray[0]);
 
 ?>
 
 <script>
     var apiKey = ""; // Initialize the apiKey variable
-
+console.log('<?php echo $ids_separated ?>');
     $(document).ready(function () {
     refreshToken();
     // Function to refresh the access token
@@ -92,16 +101,6 @@ include AMADEUS_PLUGIN_PATH . 'includes/api-config.php';
 
     var id_attr = '';
 
-    // '<?php
-    //     $id_attributes = get_plugin_options_ap( 'id_attributes' );
-    //     echo '<ul>';
-    //     foreach ( $id_attributes as $slide ) {
-    //         echo '<li>';
-    //         echo '<h2>' . $slide['id_strg'] . '</h2>';
-    //         echo '</li>';
-    //     }
-    //     echo '</ul>';
-    // ?>'
     // Autocomplete functionality
     $("#autocomplete-input").autocomplete({
         source: makeAPIRequest,
