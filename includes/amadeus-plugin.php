@@ -1,11 +1,12 @@
 <?php
-
 add_action('wp_footer', 'Amadeus_Plugin_run');
 add_action('wp_head', 'Run_Jquery');
 
 function Amadeus_Plugin_run()
 {
-    include AMADEUS_PLUGIN_PATH . 'includes/templates/amadeus-plugin.php';
+    if (get_plugin_options_ap('amadeus_plugin_active') == 'yes') {
+        include AMADEUS_PLUGIN_PATH . 'includes/templates/amadeus-plugin.php';
+    }
 }
 
 function Run_Jquery()
