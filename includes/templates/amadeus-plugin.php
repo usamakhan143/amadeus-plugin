@@ -20,6 +20,10 @@ $ids_separated = $resultString;
 $BASE_URL = "";
 (carbon_get_theme_option('amadeus_api_mode') != 'yes') ? $BASE_URL = $LIVE_BASE_URL : $BASE_URL = $TEST_BASE_URL;
 
+$include_airports = carbon_get_theme_option('include_airports');
+$airport_query = '';
+($include_airports == 'yes') ? $airport_query = '&include=AIRPORTS' : $airport_query = '';
+
 ?>
 
 <script>
@@ -69,13 +73,14 @@ $BASE_URL = "";
             function makeAPIRequest(request, response) {
                 var keyword = request.term;
                 var maxResults = 10;
+                var includeAirport = '<?php echo $airport_query; ?>';
 
                 if (keyword.length >= 3) {
                     var apiUrl = amadeusBaseUrl + '<?php echo $CITIES_API ?>' +
                         "keyword=" +
                         keyword +
                         "&max=" +
-                        maxResults;
+                        maxResults + includeAirport;
 
                     $.ajax({
                         url: apiUrl,
@@ -91,12 +96,38 @@ $BASE_URL = "";
                                 return;
                             }
                             // Handle the API response and display results in the autocomplete
-                            var autocompleteData = data.data.map(function(item) {
-                                return {
-                                    label: item.name + ", " + item.address.countryCode, // Display city and country
-                                    value: item.name + ", " + item.address.countryCode, // Value to be placed in the input field
-                                };
-                            });
+                            // console.log(data.data);
+                            if (includeAirport === '') {
+                                var autocompleteData = data.data.map(function(item) {
+                                    return {
+                                        label: item.name + ", " + item.address.countryCode, // Display city and country
+                                        value: item.name + ", " + item.address.countryCode, // Value to be placed in the input field
+                                    };
+                                });
+                            } else {
+                                var autocompleteData = [];
+
+                                if (data.data && Array.isArray(data.data)) {
+                                    autocompleteData = data.data.map(function(item) {
+                                        if (item.relationships && Array.isArray(item.relationships)) {
+                                            airportsInCity = item.relationships.map(function(airport) {
+                                                return airport.id;
+                                            }).join(', ');
+
+                                            return {
+                                                label: item.name + ', ' + item.address.countryCode + ', Airports: ' + airportsInCity,
+                                                value: item.name + ', ' + item.address.countryCode + ', Airports: ' + airportsInCity
+                                            };
+                                        }
+                                        return {
+                                            label: 'N/A',
+                                            value: 'N/A'
+                                        }; // or other suitable default values
+                                    });
+                                }
+                            }
+
+
 
                             // Display autocomplete suggestions
                             response(autocompleteData);

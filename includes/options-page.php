@@ -24,6 +24,12 @@ function create_options_page_ap()
 
             Field::make('checkbox', 'amadeus_plugin_active', __('Active')),
 
+        ))
+
+        ->add_fields(array(
+
+            Field::make('checkbox', 'include_airports', __('Include Airports')),
+
             Field::make('complex', 'id_attributes', 'ID Attributes')
                 ->set_layout('tabbed-horizontal')
                 ->add_fields(array(
