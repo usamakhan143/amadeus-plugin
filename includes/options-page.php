@@ -35,6 +35,8 @@ function create_options_page_ap()
 
         ->add_fields(array(
 
+            Field::make('checkbox', 'amadeus_api_mode', __('Test mode')),
+
             Field::make('text', 'client_id', 'Client ID')
                 ->set_attribute('placeholder', 'Enter Client ID here...'),
             Field::make('text', 'client_secret', 'Client Secret')
