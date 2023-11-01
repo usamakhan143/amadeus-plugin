@@ -17,6 +17,8 @@ if ($id_attributes) {
 }
 $ids_separated = $resultString;
 
+$select_api = get_plugin_options_ap('select_api');
+
 $BASE_URL = "";
 (get_plugin_options_ap('amadeus_api_mode') != 'yes') ? $BASE_URL = $LIVE_BASE_URL : $BASE_URL = $TEST_BASE_URL;
 
@@ -32,6 +34,7 @@ $airport_query = '';
         if ($(id_attr).length) {
             var apiKey = ""; // Initialize the apiKey variable
             var amadeusBaseUrl = '<?php echo $BASE_URL; ?>';
+            const selectApi = '<?php echo $select_api; ?>';
             $(document).ready(function() {
                 refreshToken();
                 // Function to refresh the access token
@@ -77,11 +80,20 @@ $airport_query = '';
                     var includeAirport = '<?php echo $airport_query; ?>';
 
                     if (keyword.length >= 3) {
-                        var apiUrl = amadeusBaseUrl + '<?php echo $CITIES_API ?>' +
-                            "keyword=" +
-                            keyword +
-                            "&max=" +
-                            maxResults + includeAirport;
+                        let apiUrl = '';
+                        if (selectApi < 2) {
+                            apiUrl = amadeusBaseUrl + '<?php echo $CITIES_API ?>' +
+                                "keyword=" +
+                                keyword +
+                                "&max=" +
+                                maxResults + includeAirport;
+                        } else if (selectApi < 3) {
+                            apiUrl = amadeusBaseUrl + '<?php echo $AIRPORT_API ?>' +
+                                "keyword=" +
+                                keyword;
+                        } else {
+                            apiUrl = '';
+                        }
 
                         $.ajax({
                             url: apiUrl,

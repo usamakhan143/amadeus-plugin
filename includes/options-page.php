@@ -28,7 +28,19 @@ function create_options_page_ap()
 
         ->add_fields(array(
 
-            Field::make('checkbox', 'include_airports', __('Include Airports')),
+            Field::make('radio', 'select_api', __('Choose API'))
+                ->set_options(array(
+                    '1' => 'City Search',
+                    '2' => 'Airport Search'
+                )),
+
+            Field::make('checkbox', 'include_airports', __('Include Airports'))
+                ->set_conditional_logic([
+                    [
+                        'field' => 'select_api',
+                        'value' => '1'
+                    ]
+                ]),
 
             Field::make('complex', 'id_attributes', 'ID Attributes')
                 ->set_layout('tabbed-horizontal')
