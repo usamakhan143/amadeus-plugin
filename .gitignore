@@ -2,3 +2,4 @@
 node_modules
 vendor
 wp-content
+/includes/templates/luna-jets.php

@@ -1,24 +1,9 @@
 <?php
 
 include AMADEUS_PLUGIN_PATH . 'includes/api-config.php';
-$id_attributes = get_plugin_options_ap('id_attributes');
-if ($id_attributes) {
-    $flattenedData = array();
-
-    foreach ($id_attributes as $subArray) {
-        foreach ($subArray as $value) {
-            if ($value != '_') {
-                $flattenedData[] = '#' . trim($value);
-            }
-        }
-    }
-
-    $resultString = implode(', ', $flattenedData);
-}
-$ids_separated = $resultString;
 
 $select_api = get_plugin_options_ap('select_api');
-
+$ids_separated = getIdAttributes();
 $BASE_URL = "";
 (get_plugin_options_ap('amadeus_api_mode') != 'yes') ? $BASE_URL = $LIVE_BASE_URL : $BASE_URL = $TEST_BASE_URL;
 
@@ -34,7 +19,8 @@ $airport_query = '';
         if ($(id_attr).length) {
             var apiKey = ""; // Initialize the apiKey variable
             var amadeusBaseUrl = '<?php echo $BASE_URL; ?>';
-            const selectApi = '<?php echo $select_api; ?>';
+            let selectApi = '<?php echo $select_api; ?>';
+            
             $(document).ready(function() {
                 refreshToken();
                 // Function to refresh the access token
@@ -81,13 +67,13 @@ $airport_query = '';
 
                     if (keyword.length >= 3) {
                         let apiUrl = '';
-                        if (selectApi < 2) {
+                        if (selectApi === '1') {
                             apiUrl = amadeusBaseUrl + '<?php echo $CITIES_API ?>' +
                                 "keyword=" +
                                 keyword +
                                 "&max=" +
                                 maxResults + includeAirport;
-                        } else if (selectApi < 3) {
+                        } else if (selectApi === '2') {
                             apiUrl = amadeusBaseUrl + '<?php echo $AIRPORT_API ?>' +
                                 "keyword=" +
                                 keyword;

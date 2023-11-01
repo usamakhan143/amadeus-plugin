@@ -5,7 +5,16 @@ add_action('wp_head', 'Run_Jquery');
 function Amadeus_Plugin_run()
 {
     if (get_plugin_options_ap('amadeus_plugin_active') == 'yes') {
-        include AMADEUS_PLUGIN_PATH . 'includes/templates/amadeus-plugin.php';
+        if(get_plugin_options_ap('select_api') == "2" || get_plugin_options_ap('select_api') == "1")
+        {
+            include AMADEUS_PLUGIN_PATH . 'includes/templates/amadeus-plugin.php';
+        }
+        else if(get_plugin_options_ap('select_api') == "3"){
+            include AMADEUS_PLUGIN_PATH . 'includes/templates/luna-jets.php';
+        }
+        else {
+            include AMADEUS_PLUGIN_PATH . 'includes/templates/ninjas.php';
+        }
     }
 }
 

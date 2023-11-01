@@ -31,7 +31,9 @@ function create_options_page_ap()
             Field::make('radio', 'select_api', __('Choose API'))
                 ->set_options(array(
                     '1' => 'City Search',
-                    '2' => 'Airport Search'
+                    '2' => 'Airport Search',
+                    // '3' => 'Luna Jets',
+                    '4' => 'API Ninjas | Airports'
                 )),
 
             Field::make('checkbox', 'include_airports', __('Include Airports'))
@@ -58,7 +60,9 @@ function create_options_page_ap()
             Field::make('text', 'client_id', 'Client ID')
                 ->set_attribute('placeholder', 'Enter Client ID here...'),
             Field::make('text', 'client_secret', 'Client Secret')
-                ->set_attribute('placeholder', 'Enter Client Secret here...')
+                ->set_attribute('placeholder', 'Enter Client Secret here...'),
+            Field::make('text', 'ninja_api_key', 'Ninja API Key')
+                ->set_attribute('placeholder', 'Enter API Key here...')
 
         ));
 }
