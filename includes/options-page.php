@@ -32,7 +32,7 @@ function create_options_page_ap()
                 ->set_options(array(
                     '1' => 'City Search',
                     '2' => 'Airport Search',
-                    // '3' => 'Luna Jets',
+                    '3' => 'Air-Port-Codes',
                     '4' => 'API Ninjas | Airports'
                 )),
 
@@ -55,14 +55,28 @@ function create_options_page_ap()
 
         ->add_fields(array(
 
+            Field::make( 'html', 'amadeus_information_text' )
+                ->set_html( '<h3>Amadeus Api Credentials:</h3>' ),
             Field::make('checkbox', 'amadeus_api_mode', __('Test mode')),
 
             Field::make('text', 'client_id', 'Client ID')
                 ->set_attribute('placeholder', 'Enter Client ID here...'),
             Field::make('text', 'client_secret', 'Client Secret')
                 ->set_attribute('placeholder', 'Enter Client Secret here...'),
+
+            
+            Field::make( 'html', 'ninja_information_text' )
+                ->set_html( '<h3>Ninja Api-key:</h3>' ),
             Field::make('text', 'ninja_api_key', 'Ninja API Key')
-                ->set_attribute('placeholder', 'Enter API Key here...')
+                ->set_attribute('placeholder', 'Enter API Key here...'),
+                
+                
+            Field::make( 'html', 'airportcode_information_text' )
+                ->set_html( '<h3>Air-Port-Codes Api Credentials:</h3>' ),
+            Field::make('text', 'apc_auth', 'APC Auth')
+                ->set_attribute('placeholder', 'Enter APC Auth...'),
+            Field::make('text', 'apc_auth_secret', 'APC Auth Secret')
+                ->set_attribute('placeholder', 'Enter APC Auth Secret here...'),
 
         ));
 }
