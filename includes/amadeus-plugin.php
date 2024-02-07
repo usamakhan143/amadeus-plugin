@@ -11,6 +11,9 @@ function Amadeus_Plugin_run()
         }
         else if(get_plugin_options_ap('select_api') == "3"){
             include AMADEUS_PLUGIN_PATH . 'includes/templates/air-port-codes.php';
+            if (get_plugin_options_ap('enable_cities') == 1) {
+                include AMADEUS_PLUGIN_PATH . 'includes/templates/air-port-codes-cities-only.php';
+            }
         }
         else {
             include AMADEUS_PLUGIN_PATH . 'includes/templates/ninjas.php';

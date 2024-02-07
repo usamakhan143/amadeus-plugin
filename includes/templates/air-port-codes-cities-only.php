@@ -3,7 +3,7 @@
 include AMADEUS_PLUGIN_PATH . 'includes/api-config.php';
 
 $Is_airportCodes_Api = get_plugin_options_ap('select_api');
-$get_ID_Attributes_in_autocomplete = getIdAttributes();
+$get_ID_Attributes_in_autocomplete = getIdAttributesForCitiesOnly();
 
 ?>
 
@@ -11,15 +11,15 @@ $get_ID_Attributes_in_autocomplete = getIdAttributes();
 
 
 <script>
-var id_attr = '<?php echo $get_ID_Attributes_in_autocomplete ?>';
+var id_attr_for_cities = '<?php echo $get_ID_Attributes_in_autocomplete ?>';
 
 
     var apiAuth = '<?php echo get_plugin_options_ap('apc_auth') ?>';
     var apiAuthSecret = '<?php echo get_plugin_options_ap('apc_auth_secret') ?>';
-    var disableCities = '<?php echo get_plugin_options_ap('disable_cities') ?>';
+    var includeCountryCodes = '<?php echo get_plugin_options_ap('inl_country_codes') ?>';
     var dataLabelValues;
 
-        if ($(id_attr).length) { // Initialize the apiKey variable
+        if ($(id_attr_for_cities).length) { // Initialize the apiKey variable
             const airportCodesUrl = "https://www.air-port-codes.com/api/v1" + '<?php echo $AIRPORT_CODES_API; ?>';
             let selectApi = '<?php echo $Is_airportCodes_Api; ?>';
             
@@ -53,14 +53,14 @@ var id_attr = '<?php echo $get_ID_Attributes_in_autocomplete ?>';
                             success: function (data) {
                                 // console.log(data.airports);
                                 var autocompleteData = data.airports.map(function(item) {
-                                    if (!item.iata) {
-                                        item.iata = 'Any Airport';
+                                    if (!item.iso) {
+                                        item.iso = 'NA';
                                     }
-                                    if (disableCities == 1) {
-                                        dataLabelValues = item.name + ', ' + item.iata;
+                                    if (includeCountryCodes == 1) {
+                                        dataLabelValues = item.city + ', ' + item.country.iso;
                                     }
                                     else {
-                                        dataLabelValues = item.name + ', ' + item.iata + ', ' + item.city + ', ' + item.country.iso;
+                                        dataLabelValues = item.city;
                                     }
                                     return {
                                         label: dataLabelValues,
@@ -79,7 +79,7 @@ var id_attr = '<?php echo $get_ID_Attributes_in_autocomplete ?>';
                 }
 
                 // Autocomplete functionality
-                $(id_attr).autocomplete({
+                $(id_attr_for_cities).autocomplete({
                     source: makeAirportCodeAPIRequest,
                     minLength: 2,
                 });

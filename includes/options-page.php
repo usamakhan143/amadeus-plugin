@@ -77,6 +77,27 @@ function create_options_page_ap()
                 ->set_attribute('placeholder', 'Enter APC Auth...'),
             Field::make('text', 'apc_auth_secret', 'APC Auth Secret')
                 ->set_attribute('placeholder', 'Enter APC Auth Secret here...'),
+            Field::make('checkbox', 'disable_cities', __('Disable City With Airport')),
+            Field::make('checkbox', 'enable_cities', __('Enable Cities Separately')),
 
+            Field::make('complex', 'id_attributes_for_cities', 'ID Attributes')
+                ->set_conditional_logic([
+                    [
+                        'field' => 'enable_cities',
+                        'value' => '1'
+                    ]
+                ])
+                ->set_layout('tabbed-horizontal')
+                ->add_fields(array(
+                    Field::make('text', 'id_strg', 'CSS ID')
+                        ->set_attribute('placeholder', 'Enter the CSS ID of the field where you want to show the auto-completes.')
+                )),
+                Field::make('checkbox', 'inl_country_codes', __('Include Country Codes'))
+                ->set_conditional_logic([
+                    [
+                        'field' => 'enable_cities',
+                        'value' => '1'
+                    ]
+                ])
         ));
 }
