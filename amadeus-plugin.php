@@ -5,7 +5,7 @@
  * Description: This plugin is used to display cities and airports in a city autocomplete feature on simple text fields within any website form.
  * Author: Usama Khan
  * Author URI: https://github.com/usamakhan143
- * Version: 1.0.1
+ * Version: 1.0.2
  * Requires PHP: 7.4
  * Text Domain: amadeus-plugin-translate
  */
